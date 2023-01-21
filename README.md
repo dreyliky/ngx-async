@@ -5,7 +5,7 @@
 Directive allows you to work with Observable and visually represent its statuses, like Loading, Error, Success.
 
 # Installation
-`npm install ngx-base-state --save`
+`npm install ngx-async --save`
 
 # Get Started
 
