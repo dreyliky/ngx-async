@@ -13,8 +13,6 @@ const items = [
 
 @Injectable()
 class ItemsService {
-    public readonly data$ = of(items);
-
     public getAll(): Observable<string[]> {
         return timer(1000)
             .pipe(
@@ -44,7 +42,6 @@ class ItemsService {
 @Component({
     template: `
         <div *ngxAsync="items$ as items; loading: loading;">
-            {{ items | json }}
             <ul>
                 <li *ngFor="let item of items">
                     {{ item }}
