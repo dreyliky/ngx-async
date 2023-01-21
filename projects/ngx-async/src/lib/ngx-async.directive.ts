@@ -11,7 +11,8 @@ import {
     Observable,
     Subject,
     Subscription,
-    takeUntil
+    takeUntil,
+    tap
 } from 'rxjs';
 import { NgxAsyncContext as Context } from './ngx-async-context.class';
 
@@ -34,6 +35,10 @@ export class NgxAsyncDirective<T = unknown> implements OnChanges, OnDestroy {
     private readonly viewDestroyed$ = new Subject<boolean>();
 
     private _subscription: Subscription | undefined;
+
+    private get successOrInitialTemplate(): TemplateRef<unknown> {
+        return (this.successTemplate ?? this.templateRef);
+    }
 
     constructor(
         private readonly viewContainerRef: ViewContainerRef,
@@ -62,14 +67,19 @@ export class NgxAsyncDirective<T = unknown> implements OnChanges, OnDestroy {
     }
 
     private initDataObserver(): void {
+        let data: T;
+
         this._subscription?.unsubscribe();
         this.tryCreateView(this.loadingTemplate);
 
         this._subscription = this.data$
-            ?.pipe(takeUntil(this.viewDestroyed$))
+            ?.pipe(
+                tap((currentData) => data = currentData),
+                takeUntil(this.viewDestroyed$)
+            )
             .subscribe({
-                next: (data) => this.tryCreateView(this.templateRef, new Context(data)),
-                complete: () => this.tryCreateView(this.successTemplate ?? this.templateRef),
+                next: () => this.tryCreateView(this.templateRef, new Context(data)),
+                complete: () => this.tryCreateView(this.successOrInitialTemplate, new Context(data)),
                 error: () => this.tryCreateView(this.errorTemplate)
             });
     }
