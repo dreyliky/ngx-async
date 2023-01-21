@@ -1,27 +1,114 @@
-# NgxAsync
+## ngx-async 🪄 [Angular 15+]
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.0.4.
+# Idea
 
-## Development server
+Directive allows you to work with Observable and visually represent its statuses, like Loading, Error, Success.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+# Installation
+`npm install ngx-base-state --save`
 
-## Code scaffolding
+# Get Started
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Add `NgxAsyncModule` to your module.
 
-## Build
+```typescript
+import { NgxAsyncModule } from 'ngx-async';
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+@NgModule({
+    imports: [NgxAsyncModule]
+})
+export class AppModule {}
+```
 
-## Running unit tests
+# Usage by representing data
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Add `ngxAsync` structural directive to your container element.
 
-## Running end-to-end tests
+Define `loadingTemplate`, `errorTemplate` (optional).
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+*example.component.html*
+```html
+<ng-container *ngxAsync="labels$ as labels; loading: loadingTemplate; error: errorTemplate;">
+    <mat-list>
+        <mat-list-item *ngFor="let label of labels">
+            {{ label.name }}
+        </mat-list-item>
+    </mat-list>
+</ng-container>
 
-## Further help
+<ng-template #loadingTemplate>
+    <div class="loading">
+        Loading...
+    </div>
+</ng-template>
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+<ng-template #errorTemplate>
+    <div class="error">
+        Can't load data
+    </div>
+</ng-template>
+```
+
+*example.component.ts*
+```typescript
+@Component({})
+export class ExampleComponent {
+    public readonly labels$ = this.labelsService.getAll();
+
+    constructor(
+        private readonly labelsService: LabelsService
+    ) {}
+}
+```
+
+[StackBlitz example](https://stackblitz.com/edit/angular-ivy-sdeg3n?file=src%2Fapp%2Fapp.component.html)
+
+# Usage by representing "action" and its result
+
+*example.component.html*
+```html
+<mat-card>
+    <button
+        mat-raised-button
+        *ngxAsync="deletingProcess$; loading: loadingTemplate; error: errorTemplate; success: successTemplate;"
+        (click)="onDeleteButtonClick()">
+        Delete
+    </button>
+</mat-card>
+
+<ng-template #loadingTemplate>
+    <div class="loading">
+        Loading...
+    </div>
+</ng-template>
+
+<ng-template #errorTemplate>
+    <div class="error">
+        Something went wrong :(
+    </div>
+</ng-template>
+
+<ng-template #successTemplate>
+    <div class="success">
+        Card deleted!
+    </div>
+</ng-template>
+```
+
+*example.component.ts*
+```typescript
+@Component({})
+export class ExampleComponent {
+    public deletingProcess$: Observable<unknown> | null = null;
+
+    constructor(
+        private readonly usersService: UsersService
+    ) {}
+
+    public onDeleteButtonClick(): void {
+        this.deletingProcess$ = this.usersService.delete();
+    }
+}
+```
+
+[StackBlitz example](https://stackblitz.com/edit/angular-ivy-4xbhy4?file=src%2Fapp%2Fitem-delete-button%2Fitem-delete-button.component.html)
