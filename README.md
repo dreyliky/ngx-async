@@ -68,12 +68,17 @@ export class ExampleComponent {
 *example.component.html*
 ```html
 <mat-card>
-    <button
-        mat-raised-button
-        *ngxAsync="deletingProcess$; loading: loadingTemplate; error: errorTemplate; success: successTemplate;"
-        (click)="onDeleteButtonClick()">
-        Delete
-    </button>
+    <ng-template
+        [ngxAsync]="deletingProcess$"
+        [ngxAsyncLoading]="loadingTemplate"
+        [ngxAsyncError]="errorTemplate"
+        [ngxAsyncSuccess]="successTemplate">
+        <button
+            mat-raised-button
+            (click)="onDeleteButtonClick()">
+            Delete
+        </button>
+    </ng-template>
 </mat-card>
 
 <ng-template #loadingTemplate>
