@@ -22,7 +22,7 @@ export class AppModule {}
 
 # Usage by representing data
 
-Add `ngxAsync` structural directive to your container element.
+Add the `ngxAsync` structural directive on your element.
 
 Define `loadingTemplate`, `errorTemplate` (optional).
 
