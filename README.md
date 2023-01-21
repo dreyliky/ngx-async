@@ -4,6 +4,10 @@
 
 Directive allows you to work with Observable and visually represent its statuses, like Loading, Error, Success.
 
+[StackBlitz example #1](https://stackblitz.com/edit/angular-ivy-sdeg3n?file=src%2Fapp%2Fapp.component.html)
+
+[StackBlitz example #2](https://stackblitz.com/edit/angular-ivy-4xbhy4?file=src%2Fapp%2Fitem-delete-button%2Fitem-delete-button.component.html)
+
 # Installation
 `npm install ngx-async --save`
 
@@ -61,8 +65,6 @@ export class ExampleComponent {
 }
 ```
 
-[StackBlitz example](https://stackblitz.com/edit/angular-ivy-sdeg3n?file=src%2Fapp%2Fapp.component.html)
-
 # Usage by representing "action" and its result
 
 *example.component.html*
@@ -115,5 +117,3 @@ export class ExampleComponent {
     }
 }
 ```
-
-[StackBlitz example](https://stackblitz.com/edit/angular-ivy-4xbhy4?file=src%2Fapp%2Fitem-delete-button%2Fitem-delete-button.component.html)
