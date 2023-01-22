@@ -21,16 +21,16 @@ import { NgxAsyncContext as Context } from './ngx-async-context.class';
 })
 export class NgxAsyncDirective<T = unknown> implements OnChanges, OnDestroy {
     @Input('ngxAsync')
-    public data$!: Observable<T> | undefined;
+    public data$!: Observable<T> | null | undefined;
 
     @Input('ngxAsyncLoading')
-    public loadingTemplate: TemplateRef<unknown> | undefined;
+    public loadingTemplate: TemplateRef<unknown> | null | undefined;
 
     @Input('ngxAsyncError')
-    public errorTemplate: TemplateRef<unknown> | undefined;
+    public errorTemplate: TemplateRef<unknown> | null | undefined;
 
     @Input('ngxAsyncSuccess')
-    public successTemplate: TemplateRef<unknown> | undefined;
+    public successTemplate: TemplateRef<unknown> | null | undefined;
 
     private readonly viewDestroyed$ = new Subject<boolean>();
 
@@ -85,7 +85,7 @@ export class NgxAsyncDirective<T = unknown> implements OnChanges, OnDestroy {
     }
 
     private tryCreateView(
-        template: TemplateRef<unknown> | undefined,
+        template: TemplateRef<unknown> | null | undefined,
         context: Context | null = null
     ): void {
         this.viewContainerRef.clear();
