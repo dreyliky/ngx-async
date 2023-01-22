@@ -24,7 +24,7 @@ import { NgxAsyncModule } from 'ngx-async';
 export class AppModule {}
 ```
 
-# Usage by representing data
+# Usage by representing data and its statuses
 
 Add the `ngxAsync` structural directive on your element.
 
@@ -65,7 +65,7 @@ export class ExampleComponent {
 }
 ```
 
-# Usage by representing "action" and its result
+# Usage by representing "action" and its statuses
 
 *example.component.html*
 ```html
