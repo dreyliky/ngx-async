@@ -16,6 +16,8 @@ import {
 } from 'rxjs';
 import { NgxAsyncContext as Context } from './ngx-async-context.class';
 
+type OptionalTemplateRef<T> = TemplateRef<T> | null | undefined;
+
 @Directive({
     selector: '[ngxAsync]'
 })
@@ -24,25 +26,25 @@ export class NgxAsyncDirective<T = unknown> implements OnChanges, OnDestroy {
     public data$!: Observable<T> | null | undefined;
 
     @Input('ngxAsyncLoading')
-    public loadingTemplate: TemplateRef<unknown> | null | undefined;
+    public loadingTemplate: OptionalTemplateRef<void>;
 
     @Input('ngxAsyncError')
-    public errorTemplate: TemplateRef<unknown> | null | undefined;
+    public errorTemplate: OptionalTemplateRef<void>;
 
     @Input('ngxAsyncSuccess')
-    public successTemplate: TemplateRef<unknown> | null | undefined;
+    public successTemplate: OptionalTemplateRef<Context<T>>;
 
     private readonly viewDestroyed$ = new Subject<boolean>();
 
     private _subscription: Subscription | undefined;
 
-    private get successOrInitialTemplate(): TemplateRef<unknown> {
-        return (this.successTemplate ?? this.templateRef);
+    private get successOrInitialTemplate(): TemplateRef<Context<T>> {
+        return (this.successTemplate ?? this.initialTemplate);
     }
 
     constructor(
         private readonly viewContainerRef: ViewContainerRef,
-        private readonly templateRef: TemplateRef<Context<T>>,
+        private readonly initialTemplate: TemplateRef<Context<T>>,
         private readonly changeDetector: ChangeDetectorRef
     ) {}
 
@@ -57,7 +59,7 @@ export class NgxAsyncDirective<T = unknown> implements OnChanges, OnDestroy {
         if (this.data$) {
             this.initDataObserver();
         } else {
-            this.tryCreateView(this.templateRef);
+            this.tryCreateView(this.initialTemplate);
         }
     }
 
@@ -78,7 +80,7 @@ export class NgxAsyncDirective<T = unknown> implements OnChanges, OnDestroy {
                 takeUntil(this.viewDestroyed$)
             )
             .subscribe({
-                next: () => this.tryCreateView(this.templateRef, new Context(data)),
+                next: () => this.tryCreateView(this.initialTemplate, new Context(data)),
                 complete: () => this.tryCreateView(this.successOrInitialTemplate, new Context(data)),
                 error: () => this.tryCreateView(this.errorTemplate)
             });
@@ -86,7 +88,7 @@ export class NgxAsyncDirective<T = unknown> implements OnChanges, OnDestroy {
 
     private tryCreateView(
         template: TemplateRef<unknown> | null | undefined,
-        context: Context | null = null
+        context?: Context
     ): void {
         if (template) {
             this.viewContainerRef.clear();
