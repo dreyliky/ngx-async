@@ -88,12 +88,10 @@ export class NgxAsyncDirective<T = unknown> implements OnChanges, OnDestroy {
         template: TemplateRef<unknown> | null | undefined,
         context: Context | null = null
     ): void {
-        this.viewContainerRef.clear();
-
         if (template) {
+            this.viewContainerRef.clear();
             this.viewContainerRef.createEmbeddedView(template, context);
+            this.changeDetector.markForCheck();
         }
-
-        this.changeDetector.markForCheck();
     }
 }

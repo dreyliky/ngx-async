@@ -194,7 +194,6 @@ describe('NgxAsyncDirective', () => {
         const fixture = module.createComponent(DeletingProcessingComponent);
         
         fixture.detectChanges();
-        console.log(fixture.nativeElement.innerHTML);
 
         // Button Success
         let deleteSuccessButton = fixture.debugElement.query(By.css('.delete-success'));
