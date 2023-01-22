@@ -28,7 +28,7 @@ export class AppModule {}
 
 Add the `ngxAsync` structural directive on your element.
 
-Define `loadingTemplate`, `errorTemplate` (optional).
+Define `loadingTemplate` (optional), `errorTemplate` (optional).
 
 *example.component.html*
 ```html
