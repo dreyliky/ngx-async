@@ -30,6 +30,16 @@ Add the `ngxAsync` structural directive on your element.
 
 Define `loadingTemplate` (optional), `errorTemplate` (optional).
 
+### Description
+
+In this example will be rendered `loadingTemplate`
+while there is no data from `labels$` Observable.
+
+If `labels$` Observable has an error then it will be rendered `errorTemplate`.
+
+if `labels$` Observable will have the status "next" (loaded),
+then will be rendered the `mat-list` component.
+
 *example.component.html*
 ```html
 <ng-container *ngxAsync="labels$ as labels; loading: loadingTemplate; error: errorTemplate;">
@@ -66,6 +76,25 @@ export class ExampleComponent {
 ```
 
 # Usage by representing "action" and its statuses
+
+You can use the `ngxAsync` directive with `ng-template` as well.
+
+In this case, data from your Observable will be in the context of the `ng-template` by the `$implicit` key.
+
+So, you can get this data by defining `let-data` on the `ng-template`.
+
+### Description
+
+In this example will be rendered `button` element.
+
+When `button` will be clicked, than `onDeleteButtonClick` handler
+will change field `deletingProcess$` to Observable from the service.
+
+After that `loadingTemplate` will be rendered while there is no data.
+
+If the `deletingProcess$` Observable has an error then it will be rendered `errorTemplate`.
+
+If the `deletingProcess$` Observable will be completed then it will be rendered `successTemplate`.
 
 *example.component.html*
 ```html
