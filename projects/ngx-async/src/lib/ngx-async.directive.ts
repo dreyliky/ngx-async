@@ -86,10 +86,7 @@ export class NgxAsyncDirective<T = unknown> implements OnChanges, OnDestroy {
             });
     }
 
-    private tryCreateView(
-        template: TemplateRef<unknown> | null | undefined,
-        context?: Context
-    ): void {
+    private tryCreateView(template: OptionalTemplateRef<unknown>, context?: Context): void {
         if (template) {
             this.viewContainerRef.clear();
             this.viewContainerRef.createEmbeddedView(template, context);
