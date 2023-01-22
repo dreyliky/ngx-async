@@ -1,4 +1,4 @@
-## ngx-async 🪄 [Angular 15+]
+## ngx-async-directive 🪄 [Angular 15+]
 
 # Idea
 
@@ -9,14 +9,14 @@ Directive allows you to work with Observable and visually represent its statuses
 [StackBlitz example #2](https://stackblitz.com/edit/angular-ivy-4xbhy4?file=src%2Fapp%2Fitem-delete-button%2Fitem-delete-button.component.html)
 
 # Installation
-`npm install ngx-async --save`
+`npm install ngx-async-directive --save`
 
 # Get Started
 
 Add `NgxAsyncModule` to your module.
 
 ```typescript
-import { NgxAsyncModule } from 'ngx-async';
+import { NgxAsyncModule } from 'ngx-async-directive';
 
 @NgModule({
     imports: [NgxAsyncModule]

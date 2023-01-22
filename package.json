@@ -1,10 +1,10 @@
 {
-  "name": "ngx-async",
-  "version": "0.0.0",
+  "name": "ngx-async-directive",
+  "version": "1.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build ngx-async --configuration production && cpx README.md dist/ngx-async",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
@@ -27,6 +27,7 @@
     "@angular/cli": "~15.0.4",
     "@angular/compiler-cli": "^15.0.0",
     "@types/jasmine": "~4.3.0",
+    "cpx": "^1.5.0",
     "jasmine-core": "~4.5.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.1.0",

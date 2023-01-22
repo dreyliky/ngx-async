@@ -1,5 +1,5 @@
 {
-  "name": "ngx-async",
+  "name": "ngx-async-directive",
   "version": "1.0.0",
   "devDependencies": {
     "@angular/common": "^15.0.0",
@@ -7,6 +7,14 @@
   },
   "dependencies": {
     "tslib": "^2.3.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dreyliky/ngx-async.git"
+  },
+  "homepage": "https://github.com/dreyliky/ngx-async#readme",
+  "bugs": {
+    "url": "https://github.com/dreyliky/ngx-async/issues"
   },
   "keywords": [
     "Typescript",
@@ -16,6 +24,6 @@
     "Reactive"
   ],
   "maintainers": [
-    "Dreyliky"
+    "DreyLiky"
   ]
 }
