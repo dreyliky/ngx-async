@@ -4,9 +4,11 @@
 
 Directive allows you to work with Observable and visually represent its statuses, like Loading, Error, Success.
 
-[StackBlitz example #1](https://stackblitz.com/edit/angular-ivy-sdeg3n?file=src%2Fapp%2Fapp.component.html)
+[StackBlitz example #1 (Data Loading)](https://stackblitz.com/edit/angular-ivy-sdeg3n?file=src%2Fapp%2Fapp.component.html)
 
-[StackBlitz example #2](https://stackblitz.com/edit/angular-ivy-4xbhy4?file=src%2Fapp%2Fitem-delete-button%2Fitem-delete-button.component.html)
+[StackBlitz example #2 (Delete "Action")](https://stackblitz.com/edit/angular-ivy-4xbhy4?file=src%2Fapp%2Fitem-delete-button%2Fitem-delete-button.component.html)
+
+[StackBlitz example #3 (Search "Action")](https://stackblitz.com/edit/angular-ivy-hjc4vl?file=src%2Fapp%2Fapp.component.html)
 
 # Installation
 `npm install ngx-async-directive --save`
@@ -28,7 +30,11 @@ export class AppModule {}
 
 Add the `ngxAsync` structural directive on your element.
 
-Define `loadingTemplate` (optional), `errorTemplate` (optional).
+You can use the `ngxAsync` directive with `ng-template` as well.
+
+In this case, data from your Observable will be in the context of the `ng-template` by the `$implicit` key.
+
+So, you can get this data by defining `let-data` on the `ng-template`.
 
 ### Description
 
@@ -77,17 +83,9 @@ export class ExampleComponent {
 
 # Usage by representing "action" and its statuses
 
-You can use the `ngxAsync` directive with `ng-template` as well.
-
-In this case, data from your Observable will be in the context of the `ng-template` by the `$implicit` key.
-
-So, you can get this data by defining `let-data` on the `ng-template`.
-
-### Description
-
 In this example will be rendered `button` element.
 
-When `button` will be clicked, than `onDeleteButtonClick` handler
+When `button` will be clicked, then `onDeleteButtonClick` handler
 will change field `deletingProcess$` to Observable from the service.
 
 After that `loadingTemplate` will be rendered while there is no data.
