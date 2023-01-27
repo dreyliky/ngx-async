@@ -7,9 +7,7 @@ Directive allows you to work with Observable and visually represent its statuses
 Add the `ngxAsync` structural directive on your element.
 
 You can use the `ngxAsync` directive with `ng-template` as well.
-
 In this case, data from your Observable will be in the context of the `ng-template` by the `$implicit` key.
-
 So, you can get this data by defining `let-data` on the `ng-template`.
 
 [StackBlitz example #1 (Data Loading)](https://stackblitz.com/edit/angular-ivy-sdeg3n?file=src%2Fapp%2Fapp.component.html)
