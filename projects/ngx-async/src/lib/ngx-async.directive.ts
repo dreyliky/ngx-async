@@ -1,9 +1,11 @@
 import {
     ChangeDetectorRef,
     Directive,
+    EventEmitter,
     Input,
     OnChanges,
     OnDestroy,
+    Output,
     TemplateRef,
     ViewContainerRef
 } from '@angular/core';
@@ -11,8 +13,7 @@ import {
     Observable,
     Subject,
     Subscription,
-    takeUntil,
-    tap
+    takeUntil
 } from 'rxjs';
 import { NgxAsyncContext as Context } from './ngx-async-context.class';
 
@@ -33,6 +34,18 @@ export class NgxAsyncDirective<T = unknown> implements OnChanges, OnDestroy {
 
     @Input('ngxAsyncSuccess')
     public successTemplate: OptionalTemplateRef<Context<T>>;
+
+    @Output()
+    public loading = new EventEmitter();
+
+    @Output()
+    public newData = new EventEmitter<T>();
+
+    @Output()
+    public error = new EventEmitter();
+
+    @Output()
+    public success = new EventEmitter<T>();
 
     private readonly viewDestroyed$ = new Subject<boolean>();
 
@@ -73,16 +86,25 @@ export class NgxAsyncDirective<T = unknown> implements OnChanges, OnDestroy {
 
         this._subscription?.unsubscribe();
         this.tryCreateView(this.loadingTemplate);
+        this.loading.emit();
 
         this._subscription = this.data$
-            ?.pipe(
-                tap((currentData) => data = currentData),
-                takeUntil(this.viewDestroyed$)
-            )
+            ?.pipe(takeUntil(this.viewDestroyed$))
             .subscribe({
-                next: () => this.tryCreateView(this.initialTemplate, new Context(data)),
-                complete: () => this.tryCreateView(this.successOrInitialTemplate, new Context(data)),
-                error: () => this.tryCreateView(this.errorTemplate)
+                next: (newData) => {
+                    data = newData;
+
+                    this.tryCreateView(this.initialTemplate, new Context(data));
+                    this.newData.emit(newData);
+                },
+                complete: () => {
+                    this.tryCreateView(this.successOrInitialTemplate, new Context(data));
+                    this.success.next(data);
+                },
+                error: () => {
+                    this.tryCreateView(this.errorTemplate);
+                    this.error.emit();
+                }
             });
     }
 
